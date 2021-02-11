@@ -26,7 +26,7 @@ const InputLink = ({ addLink }) => {
         <button
           onClick={onSubmitHandler}>Enter</button>
       </form>
-      <i>example format: https://www.reddit.com/r/IAmA/comments/r4nd0m/i_am_john_doe_a_very_cool_guy_ama/</i>
+      <i className={classes.ExampleLink}>Example format: https://www.reddit.com/r/IAmA/comments/r4nd0m/i_am_john_doe_a_very_cool_guy_ama/</i>
     </div>
   );
 
