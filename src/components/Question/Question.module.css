@@ -1,0 +1,17 @@
+.QuestionSection {
+  display: flex;
+  justify-content: center;
+  flex-wrap: auto;
+  text-align: center;
+}
+
+.Question {
+  width: 400px;
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 3px #ccc;
+  margin: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
