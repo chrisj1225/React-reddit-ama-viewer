@@ -39,6 +39,7 @@ class Layout extends Component {
             if ((commentSection[i].data.author !== originalPost.author) && (commentSection[i].data.replies.data.children[0].data.author === originalPost.author)) {
               
               const newPost = {
+                commenter: commentSection[i].data.author,
                 question: commentSection[i].data.body,
                 id: commentSection[i].data.id,
                 answer: commentSection[i].data.replies.data.children[0].data.body
@@ -104,6 +105,7 @@ class Layout extends Component {
     if (this.state.redditLink.length > 0) {
       questionPosts = this.state.posts.map(post => {
         return <Question 
+          commenter={post.commenter}
           question={post.question}  
           clicked={this.selectQuestionHandler}
           id={post.id}

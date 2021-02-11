@@ -5,7 +5,7 @@ import classes from './Logo.module.css';
 
 const Logo = (props) => (
   <div className={classes.Logo}>
-    <img src={redditLogo} alt="Reddit Logo" />
+    <a href="/"><img src={redditLogo} alt="Reddit Logo" /></a>
   </div>
 );
 

@@ -15,3 +15,8 @@
   box-sizing: border-box;
   cursor: pointer;
 }
+
+.AuthorName {
+  text-align: justify;
+  font-size: 12px;
+}
