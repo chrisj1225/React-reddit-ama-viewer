@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const InputNumPosts = ({ addNumPosts }) => {
-  const [inputNum, setInputNum] = useState(20);
+  const [inputNum, setInputNum] = useState(10);
 
   const onChangeHandler = (e) => {
     setInputNum(e.target.value);
@@ -19,9 +19,9 @@ const InputNumPosts = ({ addNumPosts }) => {
           Select # of posts to view: &nbsp;
           <select value={inputNum} onChange={onChangeHandler}>
             <option value={5}>5</option>
-            <option value={10}>10</option>
+            <option defaultValue value={10}>10</option>
             <option value={15}>15</option>
-            <option defaultValue value={20}>20</option>
+            <option value={20}>20</option>
             <option value={25}>25</option>
             <option value={30}>30</option>
             <option value={40}>40</option>

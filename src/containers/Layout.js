@@ -12,7 +12,7 @@ import Modal from '../components/UI/Modal/Modal';
 
 class Layout extends Component {
   state = {
-    numPosts: 20,
+    numPosts: 10,
     redditLink: "",
     title: "Reddit AMA Title",
     author: "Author Name",
