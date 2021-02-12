@@ -5,14 +5,14 @@ import classes from './Layout.module.css';
 import Logo from '../components/Logo/Logo';
 import AuthorRemark from '../components/AuthorRemark/AuthorRemark';
 import InputLink from '../components/InputLink/InputLink';
-import InputNumPosts from '../components/InputNumPosts/InputNumPosts';
+// import InputNumPosts from '../components/InputNumPosts/InputNumPosts';
 import Question from '../components/Question/Question';
 import CurrentPost from '../components/CurrentPost/CurrentPost';
 import Modal from '../components/UI/Modal/Modal';
 
 class Layout extends Component {
   state = {
-    numPosts: 10,
+    // numPosts: 10,
     redditLink: "",
     title: "Reddit AMA Title",
     author: "Author Name",
@@ -28,32 +28,35 @@ class Layout extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     console.log('[componentDidUpdate]')
-    if ((prevState.redditLink !== this.state.redditLink)||(prevState.numPosts !== this.state.numPosts)) {
+    if (prevState.redditLink !== this.state.redditLink) {
       axios.get(this.state.redditLink)
         .then(response => {
           const originalPost = response.data[0].data.children[0].data;
           const commentSection = response.data[1].data.children;
           const compiledRemarks = [];
           const compiledPosts = [];
-          for (let i = 0; i < (this.state.numPosts); i++) {
-            if ((commentSection[i].data.author !== originalPost.author) && (commentSection[i].data.replies.data.children[0].data.author === originalPost.author)) {
+          console.log(commentSection.length);
+          for (let i = 0; i < (commentSection.length); i++) {
+            if (commentSection[i].data.author && commentSection[i].data.replies) {
+              if ((commentSection[i].data.author !== originalPost.author) && (commentSection[i].data.replies.data.children[0].data.author === originalPost.author)) {
               
-              const newPost = {
-                commenter: commentSection[i].data.author,
-                question: commentSection[i].data.body,
-                id: commentSection[i].data.id,
-                answer: commentSection[i].data.replies.data.children[0].data.body
+                const newPost = {
+                  commenter: commentSection[i].data.author,
+                  question: commentSection[i].data.body,
+                  id: commentSection[i].data.id,
+                  answer: commentSection[i].data.replies.data.children[0].data.body
+                }
+                compiledPosts.push(newPost);
+  
+              } else if (commentSection[i].data.author === originalPost.author) {
+                
+                const newRemark = {
+                  remark: commentSection[i].data.body,
+                  id: commentSection[i].data.id
+                }
+                compiledRemarks.push(newRemark);
+  
               }
-              compiledPosts.push(newPost);
-
-            } else if (commentSection[i].data.author === originalPost.author) {
-              
-              const newRemark = {
-                remark: commentSection[i].data.body,
-                id: commentSection[i].data.id
-              }
-              compiledRemarks.push(newRemark);
-
             }
           }
           this.setState({
@@ -65,7 +68,7 @@ class Layout extends Component {
           console.log(this.state);
         })
         .catch(error => {
-          // console.log(error)
+          console.log(error)
           this.setState({error: true});
           // Use this.state.error to fire error message.
         });
@@ -75,13 +78,13 @@ class Layout extends Component {
   addLinkHandler = (currentValue) => {
     const link = currentValue + '.json';
     this.setState({redditLink: link});
-    console.log(currentValue);
-    console.log(this.state.redditLink);
+    // console.log(currentValue);
+    // console.log(this.state.redditLink);
   }
 
-  inputNumHandler = (inputNum) => {
-    this.setState({numPosts: inputNum});
-  }
+  // inputNumHandler = (inputNum) => {
+  //   this.setState({numPosts: inputNum});
+  // }
 
   selectQuestionHandler = (id) => {
     const QAArray = this.state.posts;
@@ -101,9 +104,9 @@ class Layout extends Component {
   }
 
   render () {
-    let questionPosts = <p>There is nothing here yet!</p>;
+    let questions = <p>There is nothing here yet!</p>;
     if (this.state.redditLink.length > 0) {
-      questionPosts = this.state.posts.map(post => {
+      questions = this.state.posts.map(post => {
         return <Question 
           commenter={post.commenter}
           question={post.question}  
@@ -133,10 +136,9 @@ class Layout extends Component {
       <InputLink 
         addLink={this.addLinkHandler}
         />
-      <br/>
-      <InputNumPosts 
+      {/* <InputNumPosts 
         addNumPosts={this.inputNumHandler}
-        />
+        /> */}
       <p><strong>Author Remarks: </strong></p>
       {remarks}
       <Modal 
@@ -149,7 +151,7 @@ class Layout extends Component {
       </Modal> 
       <hr/>
       <section >
-       {questionPosts}
+       {questions}
       </section> 
     </div>
     );
