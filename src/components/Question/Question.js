@@ -12,7 +12,9 @@ const Question = ({ commenter, question, id, clicked }) => {
         Q: {question}
         <br />
         <br />
-        <span className={classes.AuthorName}><i>asked by u/{commenter}</i></span>
+        <span style={{fontSize: "12px"}}>
+          <i>asked by u/{commenter}</i>
+        </span>
       </p>
       
     </div>
